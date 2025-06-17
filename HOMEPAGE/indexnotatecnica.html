@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Vistoria de Imóvel</title>
+    <link rel="stylesheet" href="CSSNOTA/appnota.css">
+    <script defer src="JAVANOTA/javanota.js"></script>
+</head>
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Formulário de Vistoria</h1>
+            <p>Sistema de Avaliação e Controle de Imóveis</p>
+        </div>
+
+        <div class="form-container">
+            <!-- Card Nota Técnica -->
+            <div class="card">
+                <div class="card-title">Nota Técnica</div>
+                <div class="form-group">
+                    <label for="notaTecnica">Nota Técnica do Colaborador:</label>
+                    <textarea id="notaTecnica" placeholder="Digite a nota técnica..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="numeroProcesso">Número do Processo:</label>
+                    <input type="text" id="numeroProcesso" placeholder="Ex: 2024/001234">
+                </div>
+            </div>
+
+            <!-- Card Informações do Imóvel -->
+            <div class="card">
+                <div class="card-title">Informações do Imóvel</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="municipio">Município:</label>
+                        <input type="text" id="municipio" placeholder="Nome do município">
+                    </div>
+                    <div class="form-group">
+                        <label for="codigoImovel">Código do Imóvel:</label>
+                        <input type="text" id="codigoImovel" placeholder="Código identificador">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dadosCartoriais">Dados Cartoriais:</label>
+                        <input type="text" id="dadosCartoriais" placeholder="Informações do cartório">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataVisita">Data da Visita:</label>
+                        <input type="date" id="dataVisita">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="avaliacao">Avaliação:</label>
+                        <input type="text" id="avaliacao" placeholder="Valor da avaliação">
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Endereço:</label>
+                        <input type="text" id="endereco" placeholder="Endereço completo">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipoUso">Tipo de Uso:</label>
+                        <select id="tipoUso">
+                            <option value="">Selecione...</option>
+                            <option value="residencial">Residencial</option>
+                            <option value="comercial">Comercial</option>
+                            <option value="industrial">Industrial</option>
+                            <option value="misto">Misto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="situacao">Situação:</label>
+                        <select id="situacao">
+                            <option value="">Selecione...</option>
+                            <option value="ocupado">Ocupado</option>
+                            <option value="desocupado">Desocupado</option>
+                            <option value="em_reforma">Em Reforma</option>
+                            <option value="abandonado">Abandonado</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Localização -->
+            <div class="card">
+                <div class="card-title">Localização do Imóvel</div>
+                <div class="search-container">
+                    <input type="text" id="searchLocation" class="search-input" placeholder="Digite o endereço completo para buscar (rua, número, bairro, cidade)...">
+                    <button type="button" class="search-button" onclick="searchLocation()">🔍</button>
+                </div>
+                
+                <div id="locationResult" class="location-result">
+                    <div style="margin-bottom: 15px;">
+                        <strong>📍 Resultado da Busca:</strong>
+                        <div id="foundAddress" style="margin-top: 8px; padding: 10px; background: white; border-radius: 6px; border: 1px solid #ddd;">
+                            Resultado da busca aparecerá aqui...
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong>🗺️ Coordenadas:</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;">
+                            <div>
+                                <label style="font-size: 0.85rem; color: #666;">Latitude:</label>
+                                <input type="text" id="latitude" placeholder="Ex: -19.9167" readonly style="background: #f8f9fa;">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.85rem; color: #666;">Longitude:</label>
+                                <input type="text" id="longitude" placeholder="Ex: -43.9345" readonly style="background: #f8f9fa;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong>📋 Detalhes do Local:</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;">
+                            <div>
+                                <label style="font-size: 0.85rem; color: #666;">CEP:</label>
+                                <input type="text" id="cep" placeholder="00000-000" readonly style="background: #f8f9fa;">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.85rem; color: #666;">Bairro:</label>
+                                <input type="text" id="bairro" placeholder="Nome do bairro" readonly style="background: #f8f9fa;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <button type="button" class="capture-button" onclick="captureLocation()">
+                            📍 Capturar esta Localização
+                        </button>
+                        <button type="button" class="capture-button" onclick="clearLocation()" style="background: #e74c3c;">
+                            🗑️ Limpar Busca
+                        </button>
+                        <button type="button" class="capture-button" onclick="viewOnMap()" style="background: #9b59b6;">
+                            🗺️ Ver no Mapa
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seções do Relatório -->
+            <div class="section-title">DESCRIÇÃO DO IMÓVEL:</div>
+            <textarea id="descricaoImovel" placeholder="Descreva as características do imóvel..."></textarea>
+
+            <div class="section-title">VISTORIA E RELATÓRIO:</div>
+            <textarea id="vistoriaRelatorio" placeholder="Detalhes da vistoria realizada..."></textarea>
+
+            <div class="section-title">REGULARIZAÇÃO:</div>
+            <textarea id="regularizacao" placeholder="Informações sobre regularização..."></textarea>
+
+            <div class="section-title">CONCLUSÃO:</div>
+            <textarea id="conclusao" placeholder="Conclusões da vistoria..."></textarea>
+
+            <div class="section-title">FOTOS:</div>
+            <textarea id="fotos" placeholder="Descreva as fotos do imóvel, observações sobre as imagens..."></textarea>
+
+            <div class="section-title">RESPONSÁVEL PELA VISTORIA:</div>
+            <input type="text" id="responsavelVistoria" placeholder="Nome do responsável pela vistoria">
+
+            <div class="section-title">RESPONSÁVEL PELO CONTROLE DE QUALIDADE:</div>
+            <input type="text" id="responsavelQualidade" placeholder="Nome do responsável pelo controle de qualidade">
+
+            <button type="button" class="generate-pdf" onclick="generatePDF()">📑 Gerar PDF</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>
